@@ -1,0 +1,6 @@
+{
+  "name": "Sudheer Hospital HMS - Mobile Portal",
+  "description": "Cross-platform mobile application for Sudheer Hospital: OPD/IPD Patient Management, Doctor Hub, Lab Orders, Pharmacy & Logistics, Patient Portal, and AI Clinical Assistant.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
