@@ -251,92 +251,52 @@ export const AdminHub: React.FC<AdminHubProps> = ({ subTab }) => {
         </div>
       </div>
 
-      {/* Sub-Tab Navigation Bar Connecting All Admin Modules */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-        {/* Tab 1: Appointments Queue */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_appointments")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_appointments" || currentTab === "admin_overview" || currentTab === "overview"
-              ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <Calendar className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Appointments Queue</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_appointments" || currentTab === "admin_overview" || currentTab === "overview"
-              ? "bg-emerald-500/30 text-white border-emerald-400/40"
-              : "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-          }`}>
-            {appointmentsList.length}
-          </span>
-        </button>
+      {/* Sub-Tab Navigation Bar (Only for Pricing & Exports Catalog / Bulk Exports) */}
+      {["admin_exports", "admin_pricing", "admin_tests", "admin_config", "exports", "pricing"].includes(currentTab) && (
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          {/* Tab: Diagnostic Tests Catalog */}
+          <button
+            type="button"
+            onClick={() => setCurrentTab("admin_tests")}
+            className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
+              ["admin_tests", "admin_config", "tests", "config"].includes(currentTab)
+                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
+                : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            <FlaskConical className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Diagnostic Catalog</span>
+            <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
+              ["admin_tests", "admin_config", "tests", "config"].includes(currentTab)
+                ? "bg-indigo-500/30 text-white border-indigo-400/40"
+                : "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
+            }`}>
+              {labTestsList.length}
+            </span>
+          </button>
 
-        {/* Tab 2: Ward & Rooms */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_rooms")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_rooms" || currentTab === "rooms"
-              ? "bg-purple-600 text-white shadow-md shadow-purple-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <BedDouble className="w-3.5 h-3.5 text-purple-400" />
-          <span>Ward & Rooms</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_rooms" || currentTab === "rooms"
-              ? "bg-purple-500/30 text-white border-purple-400/40"
-              : "bg-purple-500/20 text-purple-300 border-purple-500/30"
-          }`}>
-            {roomsList.length}
-          </span>
-        </button>
-
-        {/* Tab 4: Diagnostic Tests Catalog */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_tests")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_tests" || currentTab === "admin_config" || currentTab === "tests" || currentTab === "config"
-              ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <FlaskConical className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Diagnostic Catalog</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_tests" || currentTab === "admin_config" || currentTab === "tests" || currentTab === "config"
-              ? "bg-indigo-500/30 text-white border-indigo-400/40"
-              : "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
-          }`}>
-            {labTestsList.length}
-          </span>
-        </button>
-
-        {/* Tab 5: Bulk Exports */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_exports")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_exports" || currentTab === "admin_pricing" || currentTab === "exports" || currentTab === "pricing"
-              ? "bg-amber-600 text-white shadow-md shadow-amber-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <Download className="w-3.5 h-3.5 text-amber-400" />
-          <span>Bulk Exports</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_exports" || currentTab === "admin_pricing" || currentTab === "exports" || currentTab === "pricing"
-              ? "bg-amber-500/30 text-white border-amber-400/40"
-              : "bg-amber-500/20 text-amber-300 border-amber-500/30"
-          }`}>
-            CSV
-          </span>
-        </button>
-      </div>
+          {/* Tab: Bulk Exports */}
+          <button
+            type="button"
+            onClick={() => setCurrentTab("admin_exports")}
+            className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
+              ["admin_exports", "admin_pricing", "exports", "pricing"].includes(currentTab)
+                ? "bg-amber-600 text-white shadow-md shadow-amber-600/20"
+                : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            <Download className="w-3.5 h-3.5 text-amber-400" />
+            <span>Bulk Exports</span>
+            <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
+              ["admin_exports", "admin_pricing", "exports", "pricing"].includes(currentTab)
+                ? "bg-amber-500/30 text-white border-amber-400/40"
+                : "bg-amber-500/20 text-amber-300 border-amber-500/30"
+            }`}>
+              CSV
+            </span>
+          </button>
+        </div>
+      )}
 
       {/* Render Selected Sub-Component */}
       {(currentTab === "admin_appointments" ||

@@ -6,7 +6,7 @@ async function testConnection() {
     const count = await prisma.user.count();
     console.log("SUCCESS! User count in database:", count);
   } catch (err: any) {
-    console.error("PRISMA_DB_ERROR:", err.message || err);
+    console.error("PRISMA_DB_ERROR:", err);
   } finally {
     await prisma.$disconnect();
   }

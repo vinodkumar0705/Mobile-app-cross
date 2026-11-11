@@ -402,9 +402,13 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
           >
             <div className="flex items-center gap-2 min-w-0">
               <Calendar className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="font-mono text-white truncate text-xs">{aptDateFilter || "Today"}</span>
+              <span className="font-mono text-white truncate text-xs">
+                {aptDateFilter ? (aptDateFilter === getTodayStr() ? "Today" : aptDateFilter) : "All Dates"}
+              </span>
             </div>
-            <span className="text-[9px] text-emerald-400 font-bold uppercase shrink-0">Change Date</span>
+            <span className="text-[9px] text-emerald-400 font-bold uppercase shrink-0">
+              {aptDateFilter ? "Change" : "Filter"}
+            </span>
           </div>
         </div>
 
@@ -413,8 +417,20 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
           {filteredAppointments.length === 0 ? (
             <div className="p-8 text-center bg-slate-950/60 rounded-2xl border border-slate-800 space-y-2">
               <Calendar className="w-8 h-8 text-slate-600 mx-auto" />
-              <p className="text-sm font-semibold text-slate-300">No appointments found for the selected filter</p>
-              <p className="text-xs text-slate-500">Try clearing filters or schedule a new patient appointment above</p>
+              <p className="text-sm font-semibold text-slate-300">
+                No appointments found for {aptDateFilter ? `date ${aptDateFilter}` : "the selected filter"}
+              </p>
+              <div className="text-xs text-slate-500">
+                {aptDateFilter && (
+                  <button
+                    type="button"
+                    onClick={() => setAptDateFilter("")}
+                    className="text-emerald-400 hover:underline font-bold cursor-pointer"
+                  >
+                    Click to View All Appointments ({appointmentsList.length})
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             filteredAppointments.map((apt) => (
@@ -813,33 +829,47 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
               <label className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
                 Quick Select Date
               </label>
-              <div className="grid grid-cols-3 gap-2 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 {[
-                  { label: "Yesterday", offset: -1 },
-                  { label: "Today", offset: 0 },
-                  { label: "Tomorrow", offset: 1 },
-                ].map((item) => {
-                  const d = new Date();
-                  d.setDate(d.getDate() + item.offset);
-                  const dateStr = d.toISOString().split("T")[0];
-                  return (
-                    <button
-                      key={dateStr}
-                      onClick={() => {
-                        setAptDateFilter(dateStr);
-                        setShowAdminCalendarModal(false);
-                      }}
-                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                        aptDateFilter === dateStr
-                          ? "bg-emerald-600 text-white border-emerald-500 font-bold shadow-md shadow-emerald-600/20"
-                          : "bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800"
-                      }`}
-                    >
-                      <span className="block text-[11px] font-bold">{item.label}</span>
-                      <span className="block text-[9px] text-slate-400 font-mono mt-0.5">{dateStr}</span>
-                    </button>
-                  );
-                })}
+                  { label: "Today", dateStr: getTodayStr(), desc: "Today's Queue" },
+                  { label: "All Dates", dateStr: "", desc: "All Appointments" },
+                  {
+                    label: "Yesterday",
+                    dateStr: (() => {
+                      const d = new Date();
+                      d.setDate(d.getDate() - 1);
+                      return d.toISOString().split("T")[0];
+                    })(),
+                    desc: "Past Day",
+                  },
+                  {
+                    label: "Tomorrow",
+                    dateStr: (() => {
+                      const d = new Date();
+                      d.setDate(d.getDate() + 1);
+                      return d.toISOString().split("T")[0];
+                    })(),
+                    desc: "Upcoming",
+                  },
+                ].map((item) => (
+                  <button
+                    key={item.label}
+                    onClick={() => {
+                      setAptDateFilter(item.dateStr);
+                      setShowAdminCalendarModal(false);
+                    }}
+                    className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
+                      aptDateFilter === item.dateStr
+                        ? "bg-emerald-600 text-white border-emerald-500 font-bold shadow-md shadow-emerald-600/20"
+                        : "bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800"
+                    }`}
+                  >
+                    <span className="block text-[11px] font-bold">{item.label}</span>
+                    <span className="block text-[9px] text-slate-400 font-mono mt-0.5">
+                      {item.dateStr || "All Records"}
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
 
