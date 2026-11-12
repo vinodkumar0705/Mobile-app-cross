@@ -365,8 +365,9 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
         </div>
 
         {/* Filter Controls Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
-          <div className="relative sm:col-span-1">
+        <div className="space-y-2 text-xs w-full">
+          {/* Search Input - Full width */}
+          <div className="relative w-full">
             <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
@@ -377,59 +378,64 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
             />
           </div>
 
-          {/* Doctor Filter */}
-          <div className="h-9 flex items-center gap-1.5 bg-slate-950 px-2.5 rounded-xl border border-slate-800">
-            <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span className="text-[10px] text-slate-400 font-bold shrink-0">Doctor:</span>
-            <select
-              value={aptDoctorFilter}
-              onChange={(e) => setAptDoctorFilter(e.target.value)}
-              className="bg-transparent border-0 text-xs text-white font-semibold focus:outline-none cursor-pointer w-full truncate py-1"
-            >
-              <option value="ALL">All Doctors ({doctorsList.length})</option>
-              {doctorsList.map((doc) => (
-                <option key={doc.id || doc.name} value={doc.id} className="bg-slate-900 text-white">
-                  {doc.name.startsWith("Dr.") ? doc.name : `Dr. ${doc.name}`}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Selectors Grid: Doctor Filter (50%) + Status Filter (50%) + Date Picker */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full">
+            {/* Doctor Filter */}
+            <div className="h-9 flex items-center gap-1.5 bg-slate-950 hover:bg-slate-900/80 px-2.5 rounded-xl border border-slate-800 transition-colors relative min-w-0">
+              <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <span className="text-[10px] text-slate-400 font-bold shrink-0">Doc:</span>
+              <select
+                value={aptDoctorFilter}
+                onChange={(e) => setAptDoctorFilter(e.target.value)}
+                className="bg-slate-950 text-white text-xs font-semibold focus:outline-none cursor-pointer w-full py-1 pr-4 truncate appearance-none [color-scheme:dark]"
+              >
+                <option value="ALL" className="bg-[#0f172a] text-white">All Doctors ({doctorsList.length})</option>
+                {doctorsList.map((doc) => (
+                  <option key={doc.id || doc.name} value={doc.id} className="bg-[#0f172a] text-white">
+                    {doc.name.startsWith("Dr.") ? doc.name : `Dr. ${doc.name}`}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-3 h-3 text-slate-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none shrink-0" />
+            </div>
 
-          {/* Status Filter */}
-          <div className="h-9 flex items-center gap-1.5 bg-slate-950 px-2.5 rounded-xl border border-slate-800">
-            <span className="text-[10px] text-slate-400 font-bold shrink-0">Status:</span>
-            <select
-              value={aptStatusFilter}
-              onChange={(e) => setAptStatusFilter(e.target.value)}
-              className="bg-transparent border-0 text-xs text-white font-semibold focus:outline-none cursor-pointer w-full py-1"
-            >
-              <option value="ALL">All Statuses</option>
-              <option value="Scheduled">Scheduled</option>
-              <option value="In-Consultation">In-Consultation</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
+            {/* Status Filter */}
+            <div className="h-9 flex items-center gap-1.5 bg-slate-950 hover:bg-slate-900/80 px-2.5 rounded-xl border border-slate-800 transition-colors relative min-w-0">
+              <span className="text-[10px] text-slate-400 font-bold shrink-0">Status:</span>
+              <select
+                value={aptStatusFilter}
+                onChange={(e) => setAptStatusFilter(e.target.value)}
+                className="bg-slate-950 text-white text-xs font-semibold focus:outline-none cursor-pointer w-full py-1 pr-4 truncate appearance-none [color-scheme:dark]"
+              >
+                <option value="ALL" className="bg-[#0f172a] text-white">All Statuses</option>
+                <option value="Scheduled" className="bg-[#0f172a] text-amber-400 font-medium">Scheduled</option>
+                <option value="In-Consultation" className="bg-[#0f172a] text-blue-400 font-medium">In-Consultation</option>
+                <option value="Completed" className="bg-[#0f172a] text-emerald-400 font-medium">Completed</option>
+                <option value="Cancelled" className="bg-[#0f172a] text-rose-400 font-medium">Cancelled</option>
+              </select>
+              <ChevronDown className="w-3 h-3 text-slate-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none shrink-0" />
+            </div>
 
-          {/* Date Picker Button */}
-          <div
-            onClick={() => setShowAdminCalendarModal(true)}
-            className="h-9 flex items-center justify-between gap-1.5 bg-slate-950 hover:bg-slate-800/80 px-3 rounded-xl border border-slate-800 cursor-pointer transition-colors"
-          >
-            <div className="flex items-center gap-2 min-w-0">
-              <Calendar className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="font-mono text-white truncate text-xs">
-                {aptDateFilter ? (aptDateFilter === getTodayStr() ? "Today" : aptDateFilter) : "All Dates"}
+            {/* Date Picker Button */}
+            <div
+              onClick={() => setShowAdminCalendarModal(true)}
+              className="h-9 flex items-center justify-between gap-1.5 bg-slate-950 hover:bg-slate-900/80 px-3 rounded-xl border border-slate-800 cursor-pointer transition-colors col-span-2 sm:col-span-1 min-w-0"
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <Calendar className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span className="font-mono text-white truncate text-xs">
+                  {aptDateFilter ? (aptDateFilter === getTodayStr() ? "Today" : aptDateFilter) : "All Dates"}
+                </span>
+              </div>
+              <span className="text-[9px] text-emerald-400 font-bold uppercase shrink-0 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                {aptDateFilter ? "Change" : "Filter"}
               </span>
             </div>
-            <span className="text-[9px] text-emerald-400 font-bold uppercase shrink-0">
-              {aptDateFilter ? "Change" : "Filter"}
-            </span>
           </div>
         </div>
 
         {/* Appointments List Grid / Queue Cards */}
-        <div className="space-y-2 pt-1 max-h-[480px] overflow-y-auto pr-1">
+        <div className="space-y-2 pt-1 max-h-[480px] overflow-y-auto overflow-x-hidden pr-0.5">
           {filteredAppointments.length === 0 ? (
             <div className="p-8 text-center bg-slate-950/60 rounded-2xl border border-slate-800 space-y-2">
               <Calendar className="w-8 h-8 text-slate-600 mx-auto" />
@@ -452,10 +458,10 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
             filteredAppointments.map((apt) => (
               <div
                 key={apt.id}
-                className="p-3 sm:p-3.5 bg-slate-950 hover:bg-slate-900 border border-slate-800/80 hover:border-slate-700 rounded-2xl flex flex-col gap-2.5 transition-all text-xs"
+                className="p-3 bg-slate-950 hover:bg-slate-900 border border-slate-800/80 hover:border-slate-700 rounded-2xl flex flex-col gap-2.5 transition-all text-xs overflow-hidden"
               >
-                {/* ROW 1: Name on first beside its Token Number (Left), Status Badge (Right) */}
-                <div className="flex items-center justify-between gap-2 w-full">
+                {/* ROW 1: Name on first beside its Token Number (Left), Status Badge Dropdown (Right) */}
+                <div className="flex items-center justify-between gap-2 w-full min-w-0">
                   <div className="flex items-center gap-2 min-w-0 flex-1">
                     <span className="px-2 py-0.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 font-mono font-bold text-emerald-400 text-xs shrink-0">
                       #{apt.tokenNumber}
@@ -465,19 +471,28 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
                     </span>
                   </div>
 
-                  <span
-                    className={`text-[9px] sm:text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider shrink-0 border ${
-                      apt.status === "Completed"
-                        ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
-                        : apt.status === "In-Consultation"
-                        ? "bg-blue-500/15 text-blue-400 border-blue-500/30"
-                        : apt.status === "Cancelled"
-                        ? "bg-rose-500/15 text-rose-400 border-rose-500/30"
-                        : "bg-amber-500/15 text-amber-400 border-amber-500/30"
-                    }`}
-                  >
-                    {apt.status}
-                  </span>
+                  {/* Status Dropdown Badge: 100% dark theme, lets user switch status anytime */}
+                  <div className="relative shrink-0">
+                    <select
+                      value={apt.status}
+                      onChange={(e) => handleUpdateAptStatus(apt.id, e.target.value as Appointment["status"])}
+                      className={`text-[9px] sm:text-[10px] pl-2 pr-5 py-0.5 rounded-full font-bold uppercase tracking-wider border appearance-none cursor-pointer [color-scheme:dark] bg-slate-950 transition-all ${
+                        apt.status === "Completed"
+                          ? "text-emerald-400 border-emerald-500/40"
+                          : apt.status === "In-Consultation"
+                          ? "text-blue-400 border-blue-500/40"
+                          : apt.status === "Cancelled"
+                          ? "text-rose-400 border-rose-500/40"
+                          : "text-amber-400 border-amber-500/40"
+                      }`}
+                    >
+                      <option value="Scheduled" className="bg-[#0f172a] text-amber-400 font-semibold">Scheduled</option>
+                      <option value="In-Consultation" className="bg-[#0f172a] text-blue-400 font-semibold">In-Consult</option>
+                      <option value="Completed" className="bg-[#0f172a] text-emerald-400 font-semibold">Completed</option>
+                      <option value="Cancelled" className="bg-[#0f172a] text-rose-400 font-semibold">Cancelled</option>
+                    </select>
+                    <ChevronDown className="w-2.5 h-2.5 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400" />
+                  </div>
                 </div>
 
                 {/* ROW 2: Doctor which they are consulting & Department */}
@@ -493,91 +508,64 @@ export const AdminAppointments: React.FC<AdminAppointmentsProps> = ({
                   )}
                 </div>
 
-                {/* ROW 3: Time on Left, Details & Complete / Status Action Button on Right */}
-                <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-800/60 w-full">
+                {/* ROW 3: Time on Left, Details & Complete Action on Right */}
+                <div className="flex items-center justify-between gap-1.5 pt-2 border-t border-slate-800/60 w-full min-w-0">
                   {/* Left: Time */}
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400 shrink-0">
-                    <Clock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <span className="font-mono text-emerald-400 font-semibold">{apt.timeSlot}</span>
+                  <div className="flex items-center gap-1 text-xs text-slate-400 min-w-0">
+                    <Clock className="w-3 h-3 text-emerald-400 shrink-0" />
+                    <span className="font-mono text-emerald-400 font-semibold text-xs">{apt.timeSlot}</span>
                     {apt.date && apt.date !== getTodayStr() && (
                       <span className="text-[10px] text-slate-500 font-mono hidden xs:inline">({apt.date})</span>
                     )}
                   </div>
 
-                  {/* Right: Details & Status Action / Button */}
+                  {/* Right: Details & Complete Action Buttons */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       type="button"
                       onClick={() => setSelectedAptDetails(apt)}
-                      className="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1 cursor-pointer transition-colors shrink-0"
+                      className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 flex items-center gap-1 cursor-pointer transition-colors shrink-0"
                     >
                       <span>Details</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                      <ChevronRight className="w-3 h-3 text-slate-400" />
                     </button>
 
-                    {/* Status Action: 1-click Complete action when in consultation + status selector dropdown */}
-                    <div className="relative flex items-center shrink-0">
-                      {apt.status === "In-Consultation" ? (
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateAptStatus(apt.id, "Completed")}
-                          className="px-2.5 py-1.5 rounded-l-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 flex items-center gap-1 cursor-pointer transition-all"
-                          title="Click to complete consultation"
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Complete</span>
-                        </button>
-                      ) : apt.status === "Scheduled" ? (
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateAptStatus(apt.id, "In-Consultation")}
-                          className="px-2.5 py-1.5 rounded-l-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md shadow-blue-600/20 flex items-center gap-1 cursor-pointer transition-all"
-                          title="Click to start consultation"
-                        >
-                          <span>In-Consult</span>
-                        </button>
-                      ) : (
-                        <span
-                          className={`px-2.5 py-1.5 rounded-l-xl text-xs font-bold border-y border-l flex items-center gap-1 ${
-                            apt.status === "Completed"
-                              ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
-                              : "bg-rose-500/15 text-rose-400 border-rose-500/30"
-                          }`}
-                        >
-                          {apt.status === "Completed" ? <CheckCircle2 className="w-3.5 h-3.5" /> : null}
-                          <span>{apt.status}</span>
-                        </span>
-                      )}
+                    {/* Quick 1-click Action Button */}
+                    {apt.status === "In-Consultation" && (
+                      <button
+                        type="button"
+                        onClick={() => handleUpdateAptStatus(apt.id, "Completed")}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shadow-md shadow-emerald-600/20 flex items-center gap-1 cursor-pointer transition-all shrink-0"
+                        title="Click to complete consultation"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>Complete</span>
+                      </button>
+                    )}
 
-                      {/* Dropdown to change to ANY status */}
-                      <div className="relative">
-                        <select
-                          value={apt.status}
-                          onChange={(e) => handleUpdateAptStatus(apt.id, e.target.value as Appointment["status"])}
-                          className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-                          title="Change appointment status"
-                        >
-                          <option value="Scheduled">Scheduled ⏳</option>
-                          <option value="In-Consultation">In-Consultation 🩺</option>
-                          <option value="Completed">Completed ✓</option>
-                          <option value="Cancelled">Cancelled ✕</option>
-                        </select>
-                        <button
-                          type="button"
-                          className={`px-1.5 py-1.5 rounded-r-xl border-y border-r text-xs flex items-center justify-center cursor-pointer transition-colors ${
-                            apt.status === "In-Consultation"
-                              ? "bg-emerald-700/80 hover:bg-emerald-600 text-white border-emerald-500/50"
-                              : apt.status === "Scheduled"
-                              ? "bg-blue-700/80 hover:bg-blue-600 text-white border-blue-500/50"
-                              : apt.status === "Completed"
-                              ? "bg-emerald-800/60 hover:bg-emerald-700 text-emerald-300 border-emerald-500/30"
-                              : "bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700"
-                          }`}
-                        >
-                          <ChevronDown className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
+                    {apt.status === "Scheduled" && (
+                      <button
+                        type="button"
+                        onClick={() => handleUpdateAptStatus(apt.id, "In-Consultation")}
+                        className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-bold shadow-md shadow-blue-600/20 flex items-center gap-1 cursor-pointer transition-all shrink-0"
+                        title="Click to start consultation"
+                      >
+                        <span>In-Consult</span>
+                      </button>
+                    )}
+
+                    {apt.status === "Completed" && (
+                      <span className="px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-400 text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1 shrink-0">
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span>Done</span>
+                      </span>
+                    )}
+
+                    {apt.status === "Cancelled" && (
+                      <span className="px-2 py-0.5 rounded-lg bg-rose-500/15 text-rose-400 text-[10px] font-bold border border-rose-500/30 flex items-center gap-1 shrink-0">
+                        <span>Cancelled</span>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
