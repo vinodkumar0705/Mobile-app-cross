@@ -1,6 +1,6 @@
 // API Client for connecting HMS Front-end with Express Backend (hms-backend-development)
 
-export const DEFAULT_LAN_IP = "192.168.15.84";
+export const DEFAULT_LAN_IP = "192.168.1.17";
 const DEFAULT_API_BASE_URL = `http://${DEFAULT_LAN_IP}:8080/api/v1`;
 const DEFAULT_HEALTH_URL = `http://${DEFAULT_LAN_IP}:8080/api/health`;
 

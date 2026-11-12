@@ -204,139 +204,119 @@ export const AdminHub: React.FC<AdminHubProps> = ({ subTab }) => {
         </div>
 
         {/* Global Executive Stats Bar */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 text-xs w-full overflow-hidden pt-1">
-          <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-1">
-            <div className="flex items-center justify-between text-slate-400 gap-1">
-              <span className="text-[11px]">Total Patients</span>
-              <Users className="w-4 h-4 text-blue-400 shrink-0" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-xs w-full pt-1">
+          {/* Card 1: Total Patients */}
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
+              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+                Total Patients
+              </span>
+              <div className="w-6 h-6 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                <Users className="w-3.5 h-3.5 text-blue-400" />
+              </div>
             </div>
-            <div className="text-lg sm:text-xl font-black text-white font-mono">
+            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
               {patientsList.length}
             </div>
-            <p className="text-[9px] text-emerald-400 font-semibold">+12% this month</p>
+            <p className="text-[9px] text-emerald-400 font-semibold truncate mt-0.5">+12% this month</p>
           </div>
 
-          <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-1">
-            <div className="flex items-center justify-between text-slate-400 gap-1">
-              <span className="text-[11px]">OPD Tokens</span>
-              <Activity className="w-4 h-4 text-emerald-400 shrink-0" />
+          {/* Card 2: OPD Tokens */}
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
+              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+                OPD Tokens
+              </span>
+              <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <Activity className="w-3.5 h-3.5 text-emerald-400" />
+              </div>
             </div>
-            <div className="text-lg sm:text-xl font-black text-white font-mono">
+            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
               {appointmentsList.length}
             </div>
-            <p className="text-[9px] text-emerald-400 font-semibold">Today's Queue</p>
+            <p className="text-[9px] text-emerald-400 font-semibold truncate mt-0.5">Today's Queue</p>
           </div>
 
-          <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-1">
-            <div className="flex items-center justify-between text-slate-400 gap-1">
-              <span className="text-[11px]">Inpatient Beds</span>
-              <BedDouble className="w-4 h-4 text-purple-400 shrink-0" />
+          {/* Card 3: Inpatient Beds */}
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
+              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+                Inpatient Beds
+              </span>
+              <div className="w-6 h-6 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
+                <BedDouble className="w-3.5 h-3.5 text-purple-400" />
+              </div>
             </div>
-            <div className="text-lg sm:text-xl font-black text-white font-mono">
+            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
               {occupiedBedsCount} / {totalBedsCount || 30}
             </div>
-            <p className="text-[9px] text-purple-400 font-semibold">Active Admissions</p>
+            <p className="text-[9px] text-purple-400 font-semibold truncate mt-0.5">Active Admissions</p>
           </div>
 
-          <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-1">
-            <div className="flex items-center justify-between text-slate-400 gap-1">
-              <span className="text-[11px]">Medical Staff</span>
-              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+          {/* Card 4: Medical Staff */}
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
+              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+                Medical Staff
+              </span>
+              <div className="w-6 h-6 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              </div>
             </div>
-            <div className="text-lg sm:text-xl font-black text-white font-mono">
+            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
               {allCombinedStaff.length}
             </div>
-            <p className="text-[9px] text-amber-400 font-semibold">Active Personnel</p>
+            <p className="text-[9px] text-amber-400 font-semibold truncate mt-0.5">Active Personnel</p>
           </div>
         </div>
       </div>
 
-      {/* Sub-Tab Navigation Bar Connecting All Admin Modules */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-        {/* Tab 1: Appointments Queue */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_appointments")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_appointments" || currentTab === "admin_overview" || currentTab === "overview"
-              ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <Calendar className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Appointments Queue</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_appointments" || currentTab === "admin_overview" || currentTab === "overview"
-              ? "bg-emerald-500/30 text-white border-emerald-400/40"
-              : "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-          }`}>
-            {appointmentsList.length}
-          </span>
-        </button>
+      {/* Sub-Tab Navigation Bar (Only for Pricing & Exports Catalog / Bulk Exports) */}
+      {["admin_exports", "admin_pricing", "admin_tests", "admin_config", "exports", "pricing"].includes(currentTab) && (
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          {/* Tab: Diagnostic Tests Catalog */}
+          <button
+            type="button"
+            onClick={() => setCurrentTab("admin_tests")}
+            className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
+              ["admin_tests", "admin_config", "tests", "config"].includes(currentTab)
+                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
+                : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            <FlaskConical className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Diagnostic Catalog</span>
+            <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
+              ["admin_tests", "admin_config", "tests", "config"].includes(currentTab)
+                ? "bg-indigo-500/30 text-white border-indigo-400/40"
+                : "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
+            }`}>
+              {labTestsList.length}
+            </span>
+          </button>
 
-        {/* Tab 2: Ward & Rooms */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_rooms")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_rooms" || currentTab === "rooms"
-              ? "bg-purple-600 text-white shadow-md shadow-purple-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <BedDouble className="w-3.5 h-3.5 text-purple-400" />
-          <span>Ward & Rooms</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_rooms" || currentTab === "rooms"
-              ? "bg-purple-500/30 text-white border-purple-400/40"
-              : "bg-purple-500/20 text-purple-300 border-purple-500/30"
-          }`}>
-            {roomsList.length}
-          </span>
-        </button>
-
-        {/* Tab 4: Diagnostic Tests Catalog */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_tests")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_tests" || currentTab === "admin_config" || currentTab === "tests" || currentTab === "config"
-              ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <FlaskConical className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Diagnostic Catalog</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_tests" || currentTab === "admin_config" || currentTab === "tests" || currentTab === "config"
-              ? "bg-indigo-500/30 text-white border-indigo-400/40"
-              : "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
-          }`}>
-            {labTestsList.length}
-          </span>
-        </button>
-
-        {/* Tab 5: Bulk Exports */}
-        <button
-          type="button"
-          onClick={() => setCurrentTab("admin_exports")}
-          className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
-            currentTab === "admin_exports" || currentTab === "admin_pricing" || currentTab === "exports" || currentTab === "pricing"
-              ? "bg-amber-600 text-white shadow-md shadow-amber-600/20"
-              : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
-          }`}
-        >
-          <Download className="w-3.5 h-3.5 text-amber-400" />
-          <span>Bulk Exports</span>
-          <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
-            currentTab === "admin_exports" || currentTab === "admin_pricing" || currentTab === "exports" || currentTab === "pricing"
-              ? "bg-amber-500/30 text-white border-amber-400/40"
-              : "bg-amber-500/20 text-amber-300 border-amber-500/30"
-          }`}>
-            CSV
-          </span>
-        </button>
-      </div>
+          {/* Tab: Bulk Exports */}
+          <button
+            type="button"
+            onClick={() => setCurrentTab("admin_exports")}
+            className={`px-3.5 py-2 rounded-xl font-bold flex items-center gap-2 shrink-0 transition-all cursor-pointer ${
+              ["admin_exports", "admin_pricing", "exports", "pricing"].includes(currentTab)
+                ? "bg-amber-600 text-white shadow-md shadow-amber-600/20"
+                : "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            <Download className="w-3.5 h-3.5 text-amber-400" />
+            <span>Bulk Exports</span>
+            <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded-full border ${
+              ["admin_exports", "admin_pricing", "exports", "pricing"].includes(currentTab)
+                ? "bg-amber-500/30 text-white border-amber-400/40"
+                : "bg-amber-500/20 text-amber-300 border-amber-500/30"
+            }`}>
+              CSV
+            </span>
+          </button>
+        </div>
+      )}
 
       {/* Render Selected Sub-Component */}
       {(currentTab === "admin_appointments" ||
