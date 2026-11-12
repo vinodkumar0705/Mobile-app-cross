@@ -7,7 +7,6 @@ import {
   Trash2,
   FileText,
   FlaskConical,
-  Sparkles,
   CheckCircle2,
   X,
   User,
@@ -185,32 +184,20 @@ export const DoctorConsultation: React.FC<DoctorConsultationProps> = ({
     <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col space-y-4 w-full shadow-xl">
       {/* Patient Banner */}
       <div className="flex flex-col gap-3 bg-slate-950 p-3.5 sm:p-4 rounded-2xl border border-slate-800 w-full">
-        {/* Row 1: Icon beside Patient Name & Token, with AI Co-Pilot on the right */}
+        {/* Row 1: Icon beside Patient Name on left, Token Number on right */}
         <div className="flex items-center justify-between gap-2 w-full">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold shrink-0">
               <User className="w-4 h-4" />
             </div>
-            <div className="flex items-center gap-2 flex-wrap min-w-0">
-              <h3 className="font-extrabold text-white text-base sm:text-lg truncate">
-                {selectedAppointment.patientName}
-              </h3>
-              <span className="font-mono text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold shrink-0">
-                Token #{selectedAppointment.tokenNumber}
-              </span>
-            </div>
+            <h3 className="font-extrabold text-white text-base sm:text-lg truncate">
+              {selectedAppointment.patientName}
+            </h3>
           </div>
 
-          <button
-            type="button"
-            onClick={onOpenAiAssistant}
-            className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 font-bold text-xs flex items-center gap-1.5 shrink-0 transition-all cursor-pointer"
-            title="Open AI Clinical Assistant"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-            <span className="hidden sm:inline">AI Clinical Co-Pilot</span>
-            <span className="sm:hidden">AI Co-Pilot</span>
-          </button>
+          <span className="font-mono text-xs px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold shrink-0 whitespace-nowrap">
+            Token #{selectedAppointment.tokenNumber}
+          </span>
         </div>
 
         {/* Row 2: Patient Details neatly aligned below patient name */}
@@ -270,81 +257,91 @@ export const DoctorConsultation: React.FC<DoctorConsultationProps> = ({
       </div>
 
       {/* Live Vitals Telemetry Recording */}
-      <div className="bg-slate-950 p-3.5 sm:p-4 rounded-2xl border border-slate-800 space-y-2.5 w-full overflow-hidden">
+      <div className="bg-slate-950 p-3.5 sm:p-4 rounded-2xl border border-slate-800 space-y-2.5 w-full">
         <div className="flex items-center justify-between text-xs flex-wrap gap-1">
           <span className="font-bold text-slate-300 flex items-center gap-1.5">
-            <HeartPulse className="w-4 h-4 text-rose-400" />
+            <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
             <span>Clinical Vitals Telemetry</span>
           </span>
-          <span className="text-[10px] text-slate-500 font-mono">Recorded Live into Patient EMR</span>
+          <span className="text-[10px] text-slate-500 font-mono">Recorded Live into EMR</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-xs font-mono">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 col-span-2 sm:col-span-1 min-w-0">
-            <span className="text-[10px] text-slate-500 block truncate">Blood Pressure (Sys/Dia)</span>
-            <div className="flex items-center gap-1">
+        <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+          {/* 1. Blood Pressure: dual-input fit spanning both columns */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 col-span-2 flex items-center justify-between gap-2">
+            <div>
+              <span className="text-[11px] text-slate-400 font-sans font-medium block">Blood Pressure</span>
+              <span className="text-[9px] text-slate-500 font-mono">Sys / Dia (mmHg)</span>
+            </div>
+            <div className="flex items-center gap-1.5 shrink-0">
               <input
                 type="number"
                 value={bpSys}
                 onChange={(e) => setBpSys(Number(e.target.value))}
-                className="w-12 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
+                className="w-14 bg-slate-950 border border-slate-700 rounded-lg py-1 px-1.5 text-white font-bold text-center text-xs focus:border-blue-500 focus:outline-none"
               />
-              <span className="text-slate-500">/</span>
+              <span className="text-slate-500 font-bold">/</span>
               <input
                 type="number"
                 value={bpDia}
                 onChange={(e) => setBpDia(Number(e.target.value))}
-                className="w-12 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
+                className="w-14 bg-slate-950 border border-slate-700 rounded-lg py-1 px-1.5 text-white font-bold text-center text-xs focus:border-blue-500 focus:outline-none"
               />
-              <span className="text-[10px] text-slate-500">mmHg</span>
+              <span className="text-[10px] text-slate-400 font-mono shrink-0">mmHg</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 min-w-0">
-            <span className="text-[10px] text-slate-500 block truncate">Pulse Rate</span>
-            <div className="flex items-center gap-1">
+          {/* 2. Pulse Rate */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 flex flex-col justify-between gap-1.5">
+            <span className="text-[11px] text-slate-400 font-sans font-medium">Pulse Rate</span>
+            <div className="flex items-center gap-1.5">
               <input
                 type="number"
                 value={pulse}
                 onChange={(e) => setPulse(Number(e.target.value))}
-                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs font-bold text-amber-400"
+                className="w-14 bg-slate-950 border border-slate-700 rounded-lg py-1 px-1 text-amber-400 font-bold text-center text-xs focus:border-amber-500 focus:outline-none"
               />
-              <span className="text-[10px] text-slate-500">bpm</span>
+              <span className="text-[10px] text-slate-400 font-mono">bpm</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 min-w-0">
-            <span className="text-[10px] text-slate-500 block truncate">Body Temp</span>
-            <div className="flex items-center gap-1">
+          {/* 3. Body Temperature */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 flex flex-col justify-between gap-1.5">
+            <span className="text-[11px] text-slate-400 font-sans font-medium">Body Temp</span>
+            <div className="flex items-center gap-1.5">
               <input
                 type="number"
                 step="0.1"
                 value={temp}
                 onChange={(e) => setTemp(Number(e.target.value))}
-                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
+                className="w-14 bg-slate-950 border border-slate-700 rounded-lg py-1 px-1 text-rose-400 font-bold text-center text-xs focus:border-rose-500 focus:outline-none"
               />
-              <span className="text-[10px] text-slate-500">°F</span>
+              <span className="text-[10px] text-slate-400 font-mono">°F</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 min-w-0">
-            <span className="text-[10px] text-slate-500 block truncate">Oxygen Sat.</span>
-            <div className="flex items-center gap-1">
+          {/* 4. Oxygen Saturation */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 flex flex-col justify-between gap-1.5">
+            <span className="text-[11px] text-slate-400 font-sans font-medium">Oxygen Sat.</span>
+            <div className="flex items-center gap-1.5">
               <input
                 type="number"
                 value={spO2}
                 onChange={(e) => setSpO2(Number(e.target.value))}
-                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs font-bold text-cyan-400"
+                className="w-14 bg-slate-950 border border-slate-700 rounded-lg py-1 px-1 text-cyan-400 font-bold text-center text-xs focus:border-cyan-500 focus:outline-none"
               />
-              <span className="text-[10px] text-slate-500">% SpO2</span>
+              <span className="text-[10px] text-slate-400 font-mono">% SpO2</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 col-span-2 sm:col-span-2 lg:col-span-1 min-w-0">
-            <span className="text-[10px] text-slate-500 block truncate">Resp. Rate</span>
-            <div className="flex items-center gap-1">
-              <span className="text-slate-200 font-bold p-1">16</span>
-              <span className="text-[10px] text-slate-500">breaths/min</span>
+          {/* 5. Respiratory Rate */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 flex flex-col justify-between gap-1.5">
+            <span className="text-[11px] text-slate-400 font-sans font-medium">Resp. Rate</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-emerald-400 font-bold text-xs bg-slate-950 border border-slate-700 rounded-lg py-1 px-2.5">
+                16
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono">breaths/m</span>
             </div>
           </div>
         </div>

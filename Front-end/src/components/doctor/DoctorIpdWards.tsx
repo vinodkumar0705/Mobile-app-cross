@@ -38,40 +38,40 @@ export const DoctorIpdWards: React.FC<DoctorIpdWardsProps> = ({
         </div>
       </div>
 
-      {/* Admitted Patients Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {/* Admitted Patients List */}
+      <div className="flex flex-col space-y-3 w-full">
         {admissions.length === 0 ? (
-          <div className="p-8 text-center text-slate-500 text-xs bg-slate-900/60 rounded-2xl border border-slate-800 col-span-2">
+          <div className="p-8 text-center text-slate-500 text-xs bg-slate-900/60 rounded-2xl border border-slate-800 w-full">
             No active inpatient admissions currently assigned under your care.
           </div>
         ) : (
           admissions.map((adm) => (
             <div
               key={adm.id}
-              className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 sm:p-4 text-xs transition-all flex flex-col justify-between gap-3 shadow-sm overflow-hidden"
+              className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-3.5 sm:p-4 text-xs transition-all flex flex-col justify-between gap-3 shadow-sm w-full"
             >
               {/* Header: Patient Info + Room & Bed Badge */}
-              <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-800">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center font-bold shrink-0">
-                    <User className="w-4 h-4" />
+              <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-slate-800 w-full">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <div className="w-9 h-9 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 flex items-center justify-center font-bold shrink-0">
+                    <User className="w-4.5 h-4.5" />
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <span className="font-bold text-sm text-white block truncate">
-                      {adm.patientName}
+                      {adm.patientName || "Admitted Patient"}
                     </span>
-                    <span className="text-[10px] text-slate-400 font-mono">
+                    <span className="text-[10px] text-slate-400 font-mono block">
                       Admission #{adm.id}
                     </span>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 font-bold font-mono text-[11px] sm:text-xs border border-purple-500/30 shrink-0 whitespace-nowrap">
-                  {adm.roomNumber} ({adm.bedNumber})
+                <span className="px-2.5 py-1 rounded-xl bg-purple-500/20 text-purple-300 font-bold font-mono text-xs border border-purple-500/30 shrink-0 whitespace-nowrap">
+                  Room {adm.roomNumber} ({adm.bedNumber})
                 </span>
               </div>
 
               {/* Body: Reason & Dietary Plan */}
-              <div className="space-y-2 py-0.5">
+              <div className="space-y-1.5 py-0.5">
                 <div className="text-slate-300 text-xs flex items-start gap-1.5">
                   <span className="text-slate-400 font-medium shrink-0">Reason:</span>
                   <span className="text-slate-200 line-clamp-2">{adm.reasonForAdmission}</span>
@@ -90,7 +90,7 @@ export const DoctorIpdWards: React.FC<DoctorIpdWardsProps> = ({
                 <button
                   type="button"
                   onClick={onOpenPrint}
-                  className="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-400 font-medium border border-slate-700 flex items-center justify-center gap-1.5 transition-all cursor-pointer text-xs"
+                  className="w-full py-2.5 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-blue-400 font-medium border border-slate-700 flex items-center justify-center gap-1.5 transition-all cursor-pointer text-xs"
                 >
                   <FileText className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                   <span>View Discharge Summary</span>
