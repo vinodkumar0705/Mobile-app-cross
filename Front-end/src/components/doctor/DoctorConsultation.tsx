@@ -184,52 +184,71 @@ export const DoctorConsultation: React.FC<DoctorConsultationProps> = ({
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-5 flex flex-col space-y-4 w-full shadow-xl">
       {/* Patient Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold text-lg shrink-0">
-            <User className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-extrabold text-white text-base sm:text-lg">
+      <div className="flex flex-col gap-3 bg-slate-950 p-3.5 sm:p-4 rounded-2xl border border-slate-800 w-full">
+        {/* Row 1: Icon beside Patient Name & Token, with AI Co-Pilot on the right */}
+        <div className="flex items-center justify-between gap-2 w-full">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold shrink-0">
+              <User className="w-4 h-4" />
+            </div>
+            <div className="flex items-center gap-2 flex-wrap min-w-0">
+              <h3 className="font-extrabold text-white text-base sm:text-lg truncate">
                 {selectedAppointment.patientName}
               </h3>
-              <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold">
+              <span className="font-mono text-[11px] sm:text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold shrink-0">
                 Token #{selectedAppointment.tokenNumber}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Phone: {selectedAppointment.patientPhone || "+91 9876543210"} • Slot: {selectedAppointment.timeSlot} • Date: {selectedAppointment.date}
-            </p>
           </div>
-        </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={onOpenAiAssistant}
-            className="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+            className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 font-bold text-xs flex items-center gap-1.5 shrink-0 transition-all cursor-pointer"
+            title="Open AI Clinical Assistant"
           >
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-            <span>AI Clinical Co-Pilot</span>
+            <Sparkles className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+            <span className="hidden sm:inline">AI Clinical Co-Pilot</span>
+            <span className="sm:hidden">AI Co-Pilot</span>
           </button>
+        </div>
 
+        {/* Row 2: Patient Details neatly aligned below patient name */}
+        <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-xs text-slate-400 pl-0.5">
+          <div className="flex items-center gap-1">
+            <span className="text-slate-500">Phone:</span>
+            <span className="text-slate-300 font-medium">{selectedAppointment.patientPhone || "+91 9876543210"}</span>
+          </div>
+          <span className="text-slate-600 hidden xs:inline">•</span>
+          <div className="flex items-center gap-1">
+            <span className="text-slate-500">Slot:</span>
+            <span className="text-blue-400 font-medium font-mono">{selectedAppointment.timeSlot}</span>
+          </div>
+          <span className="text-slate-600 hidden xs:inline">•</span>
+          <div className="flex items-center gap-1">
+            <span className="text-slate-500">Date:</span>
+            <span className="text-slate-300 font-medium">{selectedAppointment.date}</span>
+          </div>
+        </div>
+
+        {/* Row 3: + Order Lab Test and Print Rx buttons placed down side by side */}
+        <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-800/80 w-full">
           <button
             type="button"
             onClick={() => setShowLabModal(true)}
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+            className="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-purple-300 border border-purple-500/30 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
           >
-            <FlaskConical className="w-3.5 h-3.5 text-purple-400" />
-            <span>+ Order Lab Test</span>
+            <FlaskConical className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+            <span className="truncate">+ Order Lab Test</span>
           </button>
 
           <button
             type="button"
             onClick={onOpenPrint}
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+            className="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
           >
-            <FileText className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Print Rx</span>
+            <FileText className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="truncate">Print Rx</span>
           </button>
         </div>
       </div>
@@ -251,8 +270,8 @@ export const DoctorConsultation: React.FC<DoctorConsultationProps> = ({
       </div>
 
       {/* Live Vitals Telemetry Recording */}
-      <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2.5">
-        <div className="flex items-center justify-between text-xs">
+      <div className="bg-slate-950 p-3.5 sm:p-4 rounded-2xl border border-slate-800 space-y-2.5 w-full overflow-hidden">
+        <div className="flex items-center justify-between text-xs flex-wrap gap-1">
           <span className="font-bold text-slate-300 flex items-center gap-1.5">
             <HeartPulse className="w-4 h-4 text-rose-400" />
             <span>Clinical Vitals Telemetry</span>
@@ -260,69 +279,69 @@ export const DoctorConsultation: React.FC<DoctorConsultationProps> = ({
           <span className="text-[10px] text-slate-500 font-mono">Recorded Live into Patient EMR</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-mono">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1">
-            <span className="text-[10px] text-slate-500 block">Blood Pressure (Sys/Dia)</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-xs font-mono">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 col-span-2 sm:col-span-1 min-w-0">
+            <span className="text-[10px] text-slate-500 block truncate">Blood Pressure (Sys/Dia)</span>
             <div className="flex items-center gap-1">
               <input
                 type="number"
                 value={bpSys}
                 onChange={(e) => setBpSys(Number(e.target.value))}
-                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
+                className="w-12 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
               />
               <span className="text-slate-500">/</span>
               <input
                 type="number"
                 value={bpDia}
                 onChange={(e) => setBpDia(Number(e.target.value))}
-                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
+                className="w-12 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
               />
               <span className="text-[10px] text-slate-500">mmHg</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1">
-            <span className="text-[10px] text-slate-500 block">Pulse Rate</span>
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 min-w-0">
+            <span className="text-[10px] text-slate-500 block truncate">Pulse Rate</span>
             <div className="flex items-center gap-1">
               <input
                 type="number"
                 value={pulse}
                 onChange={(e) => setPulse(Number(e.target.value))}
-                className="w-16 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs font-bold text-amber-400"
+                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs font-bold text-amber-400"
               />
               <span className="text-[10px] text-slate-500">bpm</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1">
-            <span className="text-[10px] text-slate-500 block">Body Temperature</span>
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 min-w-0">
+            <span className="text-[10px] text-slate-500 block truncate">Body Temp</span>
             <div className="flex items-center gap-1">
               <input
                 type="number"
                 step="0.1"
                 value={temp}
                 onChange={(e) => setTemp(Number(e.target.value))}
-                className="w-16 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
+                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs"
               />
               <span className="text-[10px] text-slate-500">°F</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1">
-            <span className="text-[10px] text-slate-500 block">Oxygen Saturation</span>
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 min-w-0">
+            <span className="text-[10px] text-slate-500 block truncate">Oxygen Sat.</span>
             <div className="flex items-center gap-1">
               <input
                 type="number"
                 value={spO2}
                 onChange={(e) => setSpO2(Number(e.target.value))}
-                className="w-16 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs font-bold text-cyan-400"
+                className="w-14 bg-slate-950 border border-slate-800 rounded-lg p-1 text-white text-center text-xs font-bold text-cyan-400"
               />
               <span className="text-[10px] text-slate-500">% SpO2</span>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 col-span-2 sm:col-span-1">
-            <span className="text-[10px] text-slate-500 block">Resp. Rate</span>
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-2.5 space-y-1 col-span-2 sm:col-span-2 lg:col-span-1 min-w-0">
+            <span className="text-[10px] text-slate-500 block truncate">Resp. Rate</span>
             <div className="flex items-center gap-1">
               <span className="text-slate-200 font-bold p-1">16</span>
               <span className="text-[10px] text-slate-500">breaths/min</span>
