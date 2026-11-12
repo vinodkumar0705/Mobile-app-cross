@@ -147,72 +147,80 @@ export const AdminWards: React.FC<AdminWardsProps> = ({
     <div className="space-y-4 w-full">
       {/* Active Bed Allocation & Inpatient Admissions */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:p-4 space-y-4 overflow-hidden w-full">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-purple-600/20 text-purple-400 border border-purple-500/30 flex items-center justify-center shrink-0">
-              <BedDouble className="w-5 h-5" />
+        <div className="flex flex-col gap-3 border-b border-slate-800 pb-3 w-full">
+          {/* Header Title Row */}
+          <div className="flex items-center justify-between gap-2.5 w-full min-w-0">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+              <div className="w-9 h-9 rounded-xl bg-purple-600/20 text-purple-400 border border-purple-500/30 flex items-center justify-center shrink-0">
+                <BedDouble className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-xs sm:text-sm text-white truncate">
+                  Ward & Bed Allocation Master
+                </h3>
+                <p className="text-[10px] sm:text-[11px] text-slate-400 truncate">
+                  Live IPD ward admissions & bed management
+                </p>
+              </div>
             </div>
-            <div className="min-w-0">
-              <h3 className="font-bold text-xs sm:text-sm text-white flex flex-wrap items-center gap-1.5 leading-snug">
-                <span>Ward & Bed Allocation Master</span>
-                <span className="text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 border border-purple-500/30 font-bold uppercase shrink-0">
-                  {roomsList.length} Rooms Configured
-                </span>
-              </h3>
-              <p className="text-[10px] sm:text-[11px] text-slate-400 truncate">
-                Live IPD ward admissions, bed assignments, and instant patient discharge management
-              </p>
-            </div>
+
+            <span className="text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 border border-purple-500/30 font-bold uppercase shrink-0 whitespace-nowrap">
+              {roomsList.length} Rooms
+            </span>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap shrink-0">
+          {/* Action Buttons Row */}
+          <div className="grid grid-cols-2 gap-2 w-full">
             <button
+              type="button"
               onClick={() => setShowAdmitModal(true)}
-              className="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-purple-600/20 transition-all cursor-pointer"
+              className="w-full px-3 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-purple-600/20 transition-all cursor-pointer"
             >
-              <UserPlus className="w-4 h-4" />
+              <UserPlus className="w-4 h-4 shrink-0" />
               <span>Allocate Bed</span>
             </button>
             <button
+              type="button"
               onClick={() => setShowAddRoomModal(true)}
-              className="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition-all cursor-pointer"
+              className="w-full px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4 text-emerald-400" />
+              <Plus className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Add Room</span>
             </button>
           </div>
         </div>
 
         {/* Ward Rooms Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {roomsList.map((room) => {
             const availableBeds = Math.max(0, room.totalBeds - room.occupiedBeds);
             const occupancyPct = Math.min(100, (room.occupiedBeds / room.totalBeds) * 100);
             return (
               <div
                 key={room.id}
-                className="p-3.5 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-2xl text-xs space-y-2.5 transition-all flex flex-col justify-between"
+                className="p-3.5 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-2xl text-xs space-y-2.5 transition-all flex flex-col justify-between overflow-hidden shadow-sm"
               >
-                <div className="space-y-2.5">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <span className="font-bold text-white text-sm block">
+                <div className="space-y-2.5 min-w-0">
+                  {/* Room Type & Price Row */}
+                  <div className="flex items-center justify-between gap-2 w-full min-w-0">
+                    <div className="min-w-0 flex-1">
+                      <span className="font-bold text-white text-xs sm:text-sm block truncate" title={`${room.type} (${room.number})`}>
                         {room.type} ({room.number})
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-slate-400 block truncate">
                         {room.floor} • {room.wing}
                       </span>
                     </div>
-                    <span className="font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                    <span className="font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20 text-xs shrink-0 whitespace-nowrap">
                       ₹{room.ratePerDay}/day
                     </span>
                   </div>
 
                   {/* Bed Status Visual Progress */}
                   <div className="space-y-1">
-                    <div className="flex justify-between text-[11px] text-slate-300">
-                      <span>Bed Occupancy</span>
-                      <span className="font-mono font-bold text-purple-300">
+                    <div className="flex justify-between text-[11px] text-slate-300 gap-1">
+                      <span className="truncate">Bed Occupancy</span>
+                      <span className="font-mono font-bold text-purple-300 shrink-0 whitespace-nowrap">
                         {room.occupiedBeds} / {room.totalBeds} Beds
                       </span>
                     </div>
@@ -225,12 +233,12 @@ export const AdminWards: React.FC<AdminWardsProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 text-[10px]">
-                  <span className="text-slate-400 truncate flex-1 min-w-0 pr-2">
+                <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 text-[10px] gap-2 min-w-0">
+                  <span className="text-slate-400 truncate flex-1 min-w-0 pr-1">
                     {room.amenities.slice(0, 2).join(", ")}
                   </span>
                   <span
-                    className={`font-bold px-2 py-0.5 rounded-md shrink-0 ${
+                    className={`font-bold px-2 py-0.5 rounded-md shrink-0 whitespace-nowrap ${
                       availableBeds > 0
                         ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                         : "bg-red-500/10 text-red-400 border border-red-500/20"
