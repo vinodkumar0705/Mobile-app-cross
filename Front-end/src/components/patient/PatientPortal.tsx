@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import {
-  User,
   Clock,
-  Activity,
   FileText,
-  QrCode,
-  Calendar,
-  CreditCard,
-  Printer,
   CheckCircle2,
   HeartPulse,
   Sparkles,
@@ -49,11 +43,6 @@ export const PatientPortal: React.FC<PatientPortalProps> = ({
     setTimeout(() => setToastMsg(null), 3000);
   };
 
-  const handleSimulatePayment = () => {
-    showToast("Payment Successful! Receipt issued.");
-    onOpenPrint();
-  };
-
   return (
     <div className="flex-1 flex flex-col p-3 sm:p-4 bg-slate-950 text-slate-100 space-y-4">
       {toastMsg && (
@@ -78,10 +67,6 @@ export const PatientPortal: React.FC<PatientPortalProps> = ({
                 UHID: {patient.uhid}
               </p>
             </div>
-          </div>
-
-          <div className="bg-white p-1.5 rounded-xl text-black shadow">
-            <QrCode className="w-8 h-8" />
           </div>
         </div>
 
@@ -218,19 +203,18 @@ export const PatientPortal: React.FC<PatientPortalProps> = ({
             ))}
           </div>
 
-          <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
+          <div className="pt-3 border-t border-slate-800 flex items-center justify-between gap-3">
             <div className="text-xs">
               <span className="font-bold text-white block">Outstanding OPD Bill</span>
               <span className="text-[10px] text-slate-400">Consultation + Lab Test Fees</span>
             </div>
 
-            <button
-              onClick={handleSimulatePayment}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-600/20"
-            >
-              <CreditCard className="w-4 h-4" />
-              <span>Pay $160.00 Online</span>
-            </button>
+            <div className="text-right">
+              <span className="font-mono text-emerald-400 font-black text-base sm:text-lg block">
+                ₹160.00
+              </span>
+              <span className="text-[10px] text-slate-400 font-medium">To be cleared by Admin</span>
+            </div>
           </div>
         </div>
       )}
