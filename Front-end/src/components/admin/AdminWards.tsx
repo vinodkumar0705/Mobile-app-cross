@@ -190,55 +190,53 @@ export const AdminWards: React.FC<AdminWardsProps> = ({
           </div>
         </div>
 
-        {/* Ward Rooms Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* Ward Rooms List (Full Width for Clean Mobile Mode Layout) */}
+        <div className="flex flex-col space-y-3 w-full">
           {roomsList.map((room) => {
             const availableBeds = Math.max(0, room.totalBeds - room.occupiedBeds);
             const occupancyPct = Math.min(100, (room.occupiedBeds / room.totalBeds) * 100);
             return (
               <div
                 key={room.id}
-                className="p-3.5 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-2xl text-xs space-y-2.5 transition-all flex flex-col justify-between overflow-hidden shadow-sm"
+                className="p-3.5 sm:p-4 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-2xl text-xs space-y-3 transition-all flex flex-col justify-between overflow-hidden shadow-sm w-full"
               >
-                <div className="space-y-2.5 min-w-0">
+                <div className="space-y-2.5 min-w-0 w-full">
                   {/* Room Type & Price Row */}
-                  <div className="flex items-center justify-between gap-2 w-full min-w-0">
+                  <div className="flex items-center justify-between gap-2.5 w-full min-w-0">
                     <div className="min-w-0 flex-1">
-                      <span className="font-bold text-white text-xs sm:text-sm block truncate" title={`${room.type} (${room.number})`}>
+                      <span className="font-bold text-white text-sm block truncate" title={`${room.type} (${room.number})`}>
                         {room.type} ({room.number})
                       </span>
-                      <span className="text-[10px] text-slate-400 block truncate">
+                      <span className="text-[11px] text-slate-400 block truncate">
                         {room.floor} • {room.wing}
                       </span>
                     </div>
-                    <span className="font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20 text-xs shrink-0 whitespace-nowrap">
+                    <span className="font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 text-xs shrink-0 whitespace-nowrap">
                       ₹{room.ratePerDay}/day
                     </span>
                   </div>
 
                   {/* Bed Status Visual Progress */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-[11px] text-slate-300 gap-1">
-                      <span className="truncate">Bed Occupancy</span>
+                  <div className="space-y-1 w-full">
+                    <div className="flex justify-between text-xs text-slate-300 gap-1">
+                      <span>Bed Occupancy</span>
                       <span className="font-mono font-bold text-purple-300 shrink-0 whitespace-nowrap">
                         {room.occupiedBeds} / {room.totalBeds} Beds
                       </span>
                     </div>
-                    <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                    <div className="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
                       <div
-                        className="bg-gradient-to-r from-purple-500 to-indigo-500 h-2 rounded-full transition-all"
+                        className="bg-gradient-to-r from-purple-500 to-indigo-500 h-2.5 rounded-full transition-all"
                         style={{ width: `${occupancyPct}%` }}
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 text-[10px] gap-2 min-w-0">
-                  <span className="text-slate-400 truncate flex-1 min-w-0 pr-1">
-                    {room.amenities.slice(0, 2).join(", ")}
-                  </span>
+                {/* Only Bed Availability Badge (Amenities text removed to prevent any layering) */}
+                <div className="pt-2.5 border-t border-slate-800/80 w-full flex items-center justify-center">
                   <span
-                    className={`font-bold px-2 py-0.5 rounded-md shrink-0 whitespace-nowrap ${
+                    className={`w-full text-center font-bold py-1.5 px-3 rounded-xl text-xs whitespace-nowrap ${
                       availableBeds > 0
                         ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                         : "bg-red-500/10 text-red-400 border border-red-500/20"

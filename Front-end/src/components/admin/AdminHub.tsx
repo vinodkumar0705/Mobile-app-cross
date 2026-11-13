@@ -203,70 +203,70 @@ export const AdminHub: React.FC<AdminHubProps> = ({ subTab }) => {
           </button>
         </div>
 
-        {/* Global Executive Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-xs w-full pt-1">
+        {/* Global Executive Stats Bar (2x2 Grid for Clean Mobile Alignment) */}
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 text-xs w-full pt-1">
           {/* Card 1: Total Patients */}
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
-              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col justify-between gap-1 min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-2 min-w-0 w-full">
+              <span className="text-xs font-semibold text-slate-300 truncate">
                 Total Patients
               </span>
-              <div className="w-6 h-6 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
                 <Users className="w-3.5 h-3.5 text-blue-400" />
               </div>
             </div>
-            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
+            <div className="text-xl font-black text-white font-mono my-0.5 truncate">
               {patientsList.length}
             </div>
-            <p className="text-[9px] text-emerald-400 font-semibold truncate mt-0.5">+12% this month</p>
+            <p className="text-[10px] text-emerald-400 font-medium truncate">+12% this month</p>
           </div>
 
           {/* Card 2: OPD Tokens */}
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
-              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col justify-between gap-1 min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-2 min-w-0 w-full">
+              <span className="text-xs font-semibold text-slate-300 truncate">
                 OPD Tokens
               </span>
-              <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
                 <Activity className="w-3.5 h-3.5 text-emerald-400" />
               </div>
             </div>
-            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
+            <div className="text-xl font-black text-white font-mono my-0.5 truncate">
               {appointmentsList.length}
             </div>
-            <p className="text-[9px] text-emerald-400 font-semibold truncate mt-0.5">Today's Queue</p>
+            <p className="text-[10px] text-emerald-400 font-medium truncate">Today's Queue</p>
           </div>
 
           {/* Card 3: Inpatient Beds */}
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
-              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col justify-between gap-1 min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-2 min-w-0 w-full">
+              <span className="text-xs font-semibold text-slate-300 truncate">
                 Inpatient Beds
               </span>
-              <div className="w-6 h-6 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
                 <BedDouble className="w-3.5 h-3.5 text-purple-400" />
               </div>
             </div>
-            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
+            <div className="text-xl font-black text-white font-mono my-0.5 truncate">
               {occupiedBedsCount} / {totalBedsCount || 30}
             </div>
-            <p className="text-[9px] text-purple-400 font-semibold truncate mt-0.5">Active Admissions</p>
+            <p className="text-[10px] text-purple-400 font-medium truncate">Active Admissions</p>
           </div>
 
           {/* Card 4: Medical Staff */}
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between overflow-hidden min-w-0 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 gap-1.5 min-w-0 w-full">
-              <span className="text-[10px] sm:text-[11px] font-medium truncate leading-tight flex-1 min-w-0">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col justify-between gap-1 min-w-0 shadow-sm">
+            <div className="flex items-center justify-between text-slate-400 gap-2 min-w-0 w-full">
+              <span className="text-xs font-semibold text-slate-300 truncate">
                 Medical Staff
               </span>
-              <div className="w-6 h-6 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               </div>
             </div>
-            <div className="text-base sm:text-xl font-black text-white font-mono mt-1.5 truncate">
+            <div className="text-xl font-black text-white font-mono my-0.5 truncate">
               {allCombinedStaff.length}
             </div>
-            <p className="text-[9px] text-amber-400 font-semibold truncate mt-0.5">Active Personnel</p>
+            <p className="text-[10px] text-amber-400 font-medium truncate">Active Personnel</p>
           </div>
         </div>
       </div>
